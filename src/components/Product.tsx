@@ -13,7 +13,7 @@ export default function Product() {
   return (
     <section
       id="product"
-      className="relative min-h-screen py-16 px-6 md:px-12 lg:px-20 overflow-visible"
+      className="relative min-h-screen py-16 px-6 md:px-12 lg:px-20 overflow-x-clip overflow-y-visible"
       style={{
         background: "linear-gradient(135deg, #1A1A1A 0%, #2D2D2D 50%, #1A1A1A 100%)",
       }}

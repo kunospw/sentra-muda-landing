@@ -14,15 +14,17 @@ export default function Home() {
   return (
     <LanguageProvider>
       <ContactModalProvider>
-        <Navbar />
-        <main className="bg-black text-white">
-          <Hero />
-          <About />
-          <Product />
-          <WhyUs />
-          <Team />
-        </main>
-        <Footer />
+        <div className="overflow-x-hidden w-full max-w-full">
+          <Navbar />
+          <main className="bg-black text-white overflow-x-hidden">
+            <Hero />
+            <About />
+            <Product />
+            <WhyUs />
+            <Team />
+          </main>
+          <Footer />
+        </div>
       </ContactModalProvider>
     </LanguageProvider>
   )

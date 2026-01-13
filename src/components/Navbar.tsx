@@ -112,7 +112,7 @@ export default function Navbar() {
     return (
         <>
             <nav
-                className="fixed top-0 left-0 right-0 z-50 py-4 px-6 md:px-12 lg:px-20"
+                className="fixed top-0 left-0 right-0 z-50 py-4 px-4 sm:px-6 md:px-12 lg:px-20 overflow-hidden max-w-full"
                 style={{
                     background: "linear-gradient(180deg, rgba(26, 26, 26, 0.95) 0%, rgba(26, 26, 26, 0.8) 100%)",
                     backdropFilter: "blur(10px)",
