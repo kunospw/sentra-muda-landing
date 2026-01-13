@@ -86,7 +86,7 @@ export const translations = {
             thankYou: "✓ Thank you!",
             quickLinks: "Quick Links",
             contactInfo: "Contact Information",
-            location: "Aceh, Indonesia",
+            location: "Jakrta Barat, Indonesia",
             copyright: "© 2025 PT Sentra Muda Ekspor. All rights reserved.",
         },
 
@@ -190,7 +190,7 @@ export const translations = {
             thankYou: "✓ Terima kasih!",
             quickLinks: "Tautan Cepat",
             contactInfo: "Kontak Perusahaan",
-            location: "Aceh, Indonesia",
+            location: "Jakarta Barat, Indonesia",
             copyright: "© 2025 PT Sentra Muda Ekspor. Hak cipta dilindungi.",
         },
 
