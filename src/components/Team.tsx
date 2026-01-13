@@ -4,43 +4,22 @@ import { useState } from "react"
 import Image from "next/image"
 import KemiriLeafImage from "@/assets/kemiri with leaf.png"
 import { motion } from "motion/react"
+import { useLanguage } from "@/context/LanguageContext"
 
 export default function Team() {
+  const { t } = useLanguage()
+
   const teamPages = [
     [
       {
-        name: "Kanaya Naomi Manik",
-        role: "Co-Founder / Business Development",
-        description: "Bertanggung jawab atas pengembangan bisnis, strategi pasar, dan relasi dengan mitra ekspor internasional"
+        name: t.team.members.kanaya.name,
+        role: t.team.members.kanaya.role,
+        description: t.team.members.kanaya.description
       },
       {
-        name: "Iban Shalih Al Khalili",
-        role: "Co-Founder / Operations & Production",
-        description: "Mengelola proses produksi, kontrol kualitas, dan kesiapan produk sesuai standar ekspor global"
-      }
-    ],
-    [
-      {
-        name: "Team Member 3",
-        role: "Marketing Manager",
-        description: "Mengelola strategi pemasaran dan branding untuk pasar domestik dan internasional"
-      },
-      {
-        name: "Team Member 4",
-        role: "Quality Assurance",
-        description: "Memastikan standar kualitas produk sesuai dengan regulasi internasional"
-      }
-    ],
-    [
-      {
-        name: "Team Member 5",
-        role: "Logistics Coordinator",
-        description: "Mengkoordinasikan pengiriman dan distribusi produk ke berbagai negara tujuan ekspor"
-      },
-      {
-        name: "Team Member 6",
-        role: "Finance Manager",
-        description: "Mengelola keuangan perusahaan dan transaksi perdagangan internasional"
+        name: t.team.members.iban.name,
+        role: t.team.members.iban.role,
+        description: t.team.members.iban.description
       }
     ],
   ]
@@ -59,7 +38,7 @@ export default function Team() {
       <motion.div
         initial={{ opacity: 0, x: 100 }}
         whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ margin: "-100px" }}
         transition={{ duration: 0.8 }}
         className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/4 xl:translate-x-1/5 2xl:translate-x-1/6 z-10"
       >
@@ -77,16 +56,15 @@ export default function Team() {
         <motion.h2
           initial={{ opacity: 0, x: -30 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
+          viewport={{ margin: "-50px" }}
           transition={{ duration: 0.5 }}
-          className="mb-10"
+          className="mb-6 sm:mb-8 md:mb-10"
         >
           <span
-            className="text-3xl md:text-4xl lg:text-5xl font-serif tracking-wide"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif tracking-wide"
             style={{ color: "#E8D771" }}
           >
-            <span className="text-3xl md:text-4xl lg:text-5xl">Team</span>
-            <span className="text-3xl md:text-4xl lg:text-5xl"> Kami</span>
+            {t.team.title}
           </span>
         </motion.h2>
 
@@ -94,9 +72,9 @@ export default function Team() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ margin: "-50px" }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="lg:w-1/2"
+          className="w-full lg:w-1/2"
         >
           <div className="relative overflow-hidden">
             <div

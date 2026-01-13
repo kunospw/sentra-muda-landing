@@ -4,18 +4,20 @@ import { useState } from "react"
 import Image from "next/image"
 import IconImage from "@/assets/Icon.png"
 import { motion } from "motion/react"
+import { useLanguage } from "@/context/LanguageContext"
 
 export default function Footer() {
+    const { t } = useLanguage()
     const [email, setEmail] = useState("")
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [isSubscribed, setIsSubscribed] = useState(false)
 
     const navLinks = [
-        { label: "Home", href: "#hero" },
-        { label: "About", href: "#about" },
-        { label: "Product", href: "#product" },
-        { label: "Why Us", href: "#why-us" },
-        { label: "Team", href: "#team" },
+        { label: t.nav.home, href: "#hero" },
+        { label: t.nav.about, href: "#about" },
+        { label: t.nav.product, href: "#product" },
+        { label: t.nav.whyUs, href: "#why-us" },
+        { label: t.nav.team, href: "#team" },
     ]
 
     const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -41,7 +43,7 @@ export default function Footer() {
     return (
         <footer
             id="contact"
-            className="py-16 px-6 md:px-12 lg:px-20"
+            className="py-10 sm:py-12 md:py-16 px-4 sm:px-6 md:px-12 lg:px-20"
             style={{
                 background: "transparent",
             }}
@@ -51,9 +53,9 @@ export default function Footer() {
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
+                    viewport={{ margin: "-50px" }}
                     transition={{ duration: 0.6 }}
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-12"
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 md:gap-12 mb-8 sm:mb-10 md:mb-12"
                 >
                     {/* Company Description + Newsletter */}
                     <div>
@@ -75,24 +77,24 @@ export default function Footer() {
                         </div>
 
                         <p className="text-gray-400 text-sm leading-relaxed mb-6">
-                            Export-grade candlenut oil from Aceh for cosmetics, pharmaceuticals, and culinary industries.
+                            {t.footer.description}
                         </p>
 
                         {/* Newsletter Section */}
                         <div className="mt-6">
                             <h4
-                                className="text-lg font-serif mb-4"
+                                className="text-base sm:text-lg font-serif mb-3 sm:mb-4"
                                 style={{ color: "#E8D771" }}
                             >
-                                Our Newsletter
+                                {t.footer.newsletter}
                             </h4>
-                            <form onSubmit={handleSubmit} className="flex flex-row gap-2">
+                            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2">
                                 <input
                                     type="email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    placeholder="Enter your email."
-                                    className="flex-1 px-4 py-2 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 transition-all duration-300 border border-gray-600 text-sm"
+                                    placeholder={t.footer.emailPlaceholder}
+                                    className="w-full sm:flex-1 px-3 sm:px-4 py-2 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 transition-all duration-300 border border-gray-600 text-xs sm:text-sm min-w-0"
                                     style={{
                                         backgroundColor: "rgba(42, 42, 42, 0.95)",
                                     }}
@@ -102,12 +104,12 @@ export default function Footer() {
                                 <button
                                     type="submit"
                                     disabled={isSubmitting}
-                                    className="px-4 py-2 rounded-lg font-semibold text-black uppercase tracking-wider text-sm transition-all duration-300 hover:scale-105 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+                                    className="w-full sm:w-auto px-3 sm:px-4 py-2 rounded-lg font-semibold text-black uppercase tracking-wider text-xs sm:text-sm transition-all duration-300 hover:scale-105 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
                                     style={{
                                         backgroundColor: "#B8A855",
                                     }}
                                 >
-                                    {isSubmitting ? "..." : "Subscribe"}
+                                    {isSubmitting ? "..." : t.footer.subscribe}
                                 </button>
                             </form>
 
@@ -117,7 +119,7 @@ export default function Footer() {
                                     className="mt-3 text-sm"
                                     style={{ color: "#E8D771" }}
                                 >
-                                    ✓ Terima kasih!
+                                    {t.footer.thankYou}
                                 </p>
                             )}
                         </div>
@@ -129,7 +131,7 @@ export default function Footer() {
                             className="text-lg font-serif mb-4"
                             style={{ color: "#E8D771" }}
                         >
-                            Quick Links
+                            {t.footer.quickLinks}
                         </h4>
                         <ul className="space-y-3">
                             {navLinks.map((link, index) => (
@@ -152,7 +154,7 @@ export default function Footer() {
                             className="text-lg font-serif mb-4"
                             style={{ color: "#E8D771" }}
                         >
-                            Kontak Perusahaan
+                            {t.footer.contactInfo}
                         </h4>
                         <ul className="space-y-4">
                             <li className="flex items-start gap-3">
@@ -176,7 +178,7 @@ export default function Footer() {
                                     />
                                 </svg>
                                 <span className="text-gray-400 text-sm">
-                                    Aceh, Indonesia
+                                    {t.footer.location}
                                 </span>
                             </li>
                             <li className="flex items-start gap-3">
@@ -229,7 +231,7 @@ export default function Footer() {
                 <div className="border-t border-gray-700 pt-8">
                     <div className="flex flex-col md:flex-row justify-between items-center gap-4">
                         <p className="text-gray-500 text-sm">
-                            © {new Date().getFullYear()} PT Sentra Muda Ekspor. All rights reserved.
+                            {t.footer.copyright}
                         </p>
                         <div className="flex gap-6">
                             <a

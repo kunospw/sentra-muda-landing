@@ -2,12 +2,15 @@
 
 import { useState } from "react"
 import { motion } from "motion/react"
+import { useLanguage } from "@/context/LanguageContext"
 
 export default function WhyUs() {
+    const { t } = useLanguage()
+
     const stats = [
-        { value: "100%", label: "Produk Organik" },
-        { value: "95%", label: "Pelanggan Puas" },
-        { value: "1M+", label: "Penjualan Tahunan" },
+        { value: "100%", label: t.whyUs.stats.organic },
+        { value: "95%", label: t.whyUs.stats.satisfied },
+        { value: "1M+", label: t.whyUs.stats.sales },
     ]
 
     const testimonials = [
@@ -65,49 +68,49 @@ export default function WhyUs() {
                 <motion.div
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
+                    viewport={{ margin: "-100px" }}
                     transition={{ duration: 0.6 }}
-                    className="rounded-2xl p-8 md:p-12 lg:p-16"
+                    className="rounded-2xl p-6 sm:p-8 md:p-12 lg:p-16"
                     style={{ backgroundColor: "rgba(42, 42, 42, 0.95)" }}
                 >
                     {/* Title */}
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
+                        viewport={{ margin: "-50px" }}
                         transition={{ duration: 0.5, delay: 0.2 }}
-                        className="text-center mb-12"
+                        className="text-center mb-8 sm:mb-10 md:mb-12"
                     >
                         <span
-                            className="text-3xl md:text-4xl lg:text-5xl font-serif"
+                            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif"
                             style={{ color: "#E8D771" }}
                         >
-                            Progress Kami
+                            {t.whyUs.progressTitle}
                         </span>
                     </motion.h2>
 
                     {/* Stats Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 md:gap-12">
                         {stats.map((stat, index) => (
                             <motion.div
                                 key={index}
                                 className="text-center"
                                 initial={{ opacity: 0, y: 30 }}
                                 whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
+                                viewport={{ margin: "-30px" }}
+                                transition={{ duration: 0.5, delay: 0.1 + index * 0.1 }}
                             >
                                 {/* Value */}
-                                <p className="text-4xl md:text-5xl lg:text-6xl font-serif text-white mb-3">
+                                <p className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-white mb-2 sm:mb-3">
                                     {stat.value}
                                 </p>
                                 {/* Golden underline */}
                                 <div
-                                    className="w-16 h-1 mx-auto mb-3"
+                                    className="w-12 sm:w-16 h-1 mx-auto mb-2 sm:mb-3"
                                     style={{ backgroundColor: "#E8D771" }}
                                 />
                                 {/* Label */}
-                                <p className="text-gray-400 text-sm md:text-base">
+                                <p className="text-gray-400 text-xs sm:text-sm md:text-base">
                                     {stat.label}
                                 </p>
                             </motion.div>
@@ -116,39 +119,47 @@ export default function WhyUs() {
                 </motion.div>
 
                 {/* Testimonials Section */}
-                <div className="mt-16">
+                <div className="mt-10 sm:mt-12 md:mt-16">
                     {/* Title */}
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
+                        viewport={{ margin: "-50px" }}
                         transition={{ duration: 0.5 }}
-                        className="text-center mb-12"
+                        className="text-center mb-8 sm:mb-10 md:mb-12"
                     >
                         <span
-                            className="text-3xl md:text-4xl lg:text-5xl font-serif"
+                            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif"
                             style={{ color: "#E8D771" }}
                         >
-                            Testimoni
+                            {t.whyUs.testimonialTitle}
                         </span>
                     </motion.h2>
 
                     {/* Testimonial Cards */}
                     <motion.div
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        viewport={{ once: true }}
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ margin: "-50px" }}
                         transition={{ duration: 0.5, delay: 0.2 }}
                         className="relative overflow-hidden"
                     >
                         <div
-                            className="flex transition-transform duration-500 ease-in-out"
-                            style={{ transform: `translateX(-${currentPage * 100}%)` }}
+                            className="flex"
+                            style={{
+                                transform: `translateX(-${currentPage * 100}%)`,
+                                transition: "transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)"
+                            }}
                         >
                             {testimonials.map((page, pageIndex) => (
                                 <div
                                     key={pageIndex}
-                                    className="min-w-full grid grid-cols-1 md:grid-cols-2 gap-6"
+                                    className="min-w-full grid grid-cols-1 md:grid-cols-2 gap-6 px-1"
+                                    style={{
+                                        opacity: currentPage === pageIndex ? 1 : 0.3,
+                                        transform: currentPage === pageIndex ? "scale(1)" : "scale(0.95)",
+                                        transition: "opacity 0.7s ease, transform 0.7s ease"
+                                    }}
                                 >
                                     {page.map((testimonial, index) => (
                                         <div

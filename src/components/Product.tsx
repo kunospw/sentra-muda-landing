@@ -5,8 +5,11 @@ import KemiriImage from "@/assets/kemiri.png"
 import OilImage from "@/assets/oil.png"
 import { Button } from "@/components/ui/button"
 import { motion } from "motion/react"
+import { useLanguage } from "@/context/LanguageContext"
 
 export default function Product() {
+  const { t } = useLanguage()
+
   return (
     <section
       id="product"
@@ -22,30 +25,18 @@ export default function Product() {
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ margin: "-100px" }}
             transition={{ duration: 0.6 }}
             className="flex flex-col justify-center"
           >
-            <h2 className="text-3xl md:text-4xl font-serif font-bold tracking-wide mb-2" style={{ color: "#E8D771" }}>
-              <span className="text-4xl md:text-5xl">C</span>ANDLENUT{" "}
-              <span className="text-4xl md:text-5xl">O</span>IL{" "}
-              <span className="text-2xl md:text-3xl">(</span>
-              <span className="text-4xl md:text-5xl">M</span>INYAK{" "}
-              <span className="text-4xl md:text-5xl">K</span>EMIRI
-              <span className="text-2xl md:text-3xl">)</span>
+            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-serif font-bold tracking-wide mb-2" style={{ color: "#E8D771" }}>
+              {t.product.title} {t.product.titleSecond}
             </h2>
-            <h3 className="text-lg md:text-xl font-sans tracking-widest mb-6" style={{ color: "#E8D771" }}>
-              <span className="text-xl md:text-2xl">N</span>ATURAL{" "}
-              <span className="text-xl md:text-2xl">O</span>IL /{" "}
-              <span className="text-xl md:text-2xl">E</span>XPORT{" "}
-              <span className="text-xl md:text-2xl">C</span>OMMODITY
+            <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-sans tracking-widest mb-4 sm:mb-6" style={{ color: "#E8D771" }}>
+              {t.product.subtitle}
             </h3>
             <p className="text-gray-300 text-sm md:text-base leading-relaxed italic max-w-lg">
-              Minyak kemiri berkualitas tinggi yang diolah dari biji
-              kemiri pilihan asal Aceh. Produk ini digunakan sebagai
-              bahan baku industri kosmetik, farmasi, dan pengobatan
-              tradisional, dengan nilai tambah tinggi dibandingkan
-              ekspor biji kemiri mentah.
+              {t.product.description}
             </p>
           </motion.div>
 
@@ -53,7 +44,7 @@ export default function Product() {
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ margin: "-100px" }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="flex items-center justify-center lg:justify-end"
           >
@@ -62,7 +53,7 @@ export default function Product() {
               alt="Candlenut Oil Bottles"
               width={650}
               height={550}
-              className="object-contain"
+              className="object-contain w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-full"
             />
           </motion.div>
         </div>
@@ -73,7 +64,7 @@ export default function Product() {
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ margin: "-100px" }}
             transition={{ duration: 0.7 }}
             className="hidden lg:block absolute -left-8 top-[65%] -translate-y-1/2 -translate-x-1/4 xl:-translate-x-1/3 2xl:-translate-x-1/3 z-30"
           >
@@ -86,11 +77,10 @@ export default function Product() {
             />
           </motion.div>
 
-          {/* Mobile - Kemiri Image (normal flow) */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
+            viewport={{ margin: "-50px" }}
             transition={{ duration: 0.6 }}
             className="lg:hidden flex items-center justify-center mb-8"
           >
@@ -99,7 +89,7 @@ export default function Product() {
               alt="Kemiri Nuts"
               width={650}
               height={650}
-              className="object-contain"
+              className="object-contain w-full max-w-xs sm:max-w-sm md:max-w-md"
             />
           </motion.div>
 
@@ -109,20 +99,18 @@ export default function Product() {
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
+              viewport={{ margin: "-50px" }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="rounded-xl p-6"
+              className="rounded-xl p-4 sm:p-6"
               style={{ backgroundColor: "rgba(91, 91, 91, 0.3)" }}
             >
-              <h4 className="text-2xl md:text-3xl font-serif font-bold tracking-wide mb-4" style={{ color: "#E8D771" }}>
-                <span className="text-2xl md:text-5xl">S</span>PESIFIKASI{" "}
-                <span className="text-2xl md:text-5xl">P</span>RODUK
+              <h4 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-serif font-bold tracking-wide mb-3 sm:mb-4" style={{ color: "#E8D771" }}>
+                {t.product.specsTitle}
               </h4>
-              <div className="text-gray-300 text-lg md:text-xl space-y-1">
-                <p>Komposisi: 100% minyak kemiri</p>
-                <p>Metode Produksi: Cold-pressed / sesuai permintaan</p>
-                <p>Standar: Disesuaikan dengan kebutuhan dan regulasi</p>
-                <p>pasar internasional</p>
+              <div className="text-gray-300 text-sm sm:text-base md:text-lg lg:text-xl space-y-1">
+                <p>{t.product.specs.composition}</p>
+                <p>{t.product.specs.method}</p>
+                <p>{t.product.specs.standard}</p>
               </div>
             </motion.div>
 
@@ -130,20 +118,18 @@ export default function Product() {
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
+              viewport={{ margin: "-50px" }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="rounded-xl p-6"
+              className="rounded-xl p-4 sm:p-6"
               style={{ backgroundColor: "rgba(91, 91, 91, 0.3)" }}
             >
-              <h4 className="text-2xl md:text-3xl font-serif font-bold tracking-wide mb-4" style={{ color: "#E8D771" }}>
-                <span className="text-2xl md:text-5xl">K</span>EUNGGULAN{" "}
-                <span className="text-2xl md:text-5xl">P</span>RODUK
+              <h4 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-serif font-bold tracking-wide mb-3 sm:mb-4" style={{ color: "#E8D771" }}>
+                {t.product.advantagesTitle}
               </h4>
-              <div className="text-gray-300 text-lg md:text-xl space-y-1">
-                <p>Sumber bahan baku dari Aceh</p>
-                <p>Spesifikasi fleksibel sesuai kebutuhan buyer</p>
-                <p>Kualitas terkontrol dengan proses produksi</p>
-                <p>terstandar</p>
+              <div className="text-gray-300 text-sm sm:text-base md:text-lg lg:text-xl space-y-1">
+                <p>{t.product.advantages.source}</p>
+                <p>{t.product.advantages.flexible}</p>
+                <p>{t.product.advantages.quality}</p>
               </div>
             </motion.div>
           </div>
@@ -153,15 +139,15 @@ export default function Product() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ margin: "-30px" }}
           transition={{ duration: 0.5 }}
-          className="mt-8 flex justify-end"
+          className="mt-6 sm:mt-8 flex justify-center lg:justify-end"
         >
           <Button
             size="lg"
-            className="px-8 py-3 bg-[#b8a855] hover:bg-[#ebd771] text-white font-semibold text-lg md:text-xl transition-all duration-300 hover:shadow-lg hover:shadow-[#2d6a4f]/30"
+            className="px-4 sm:px-6 md:px-8 py-2 sm:py-3 bg-[#b8a855] hover:bg-[#ebd771] text-white font-semibold text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl transition-all duration-300 hover:shadow-lg hover:shadow-[#2d6a4f]/30"
           >
-            Availability: Pre-order & Bulk order
+            {t.product.availability}
           </Button>
         </motion.div>
       </div>

@@ -5,17 +5,21 @@ import Image from "next/image"
 import IconImage from "@/assets/Icon.png"
 import { motion, AnimatePresence } from "motion/react"
 import { useContactModal } from "@/context/ContactModalContext"
+import { useLanguage } from "@/context/LanguageContext"
 
 export default function Navbar() {
+    const { language, setLanguage, t } = useLanguage()
+
     const navLinks = [
-        { label: "Home", href: "#hero" },
-        { label: "About", href: "#about" },
-        { label: "Product", href: "#product" },
-        { label: "Why Us", href: "#why-us" },
-        { label: "Team", href: "#team" },
+        { label: t.nav.home, href: "#hero" },
+        { label: t.nav.about, href: "#about" },
+        { label: t.nav.product, href: "#product" },
+        { label: t.nav.whyUs, href: "#why-us" },
+        { label: t.nav.team, href: "#team" },
     ]
 
     const [activeSection, setActiveSection] = useState("")
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
     const { isOpen: isModalOpen, openModal, closeModal } = useContactModal()
     const [formData, setFormData] = useState({
         name: "",
@@ -61,10 +65,19 @@ export default function Navbar() {
 
     const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
         e.preventDefault()
-        const element = document.querySelector(href)
-        if (element) {
-            element.scrollIntoView({ behavior: "smooth" })
-        }
+        setIsMobileMenuOpen(false)
+
+        // Small delay to let menu close animation start, then scroll
+        setTimeout(() => {
+            const element = document.querySelector(href)
+            if (element) {
+                const offsetTop = element.getBoundingClientRect().top + window.scrollY - 80
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: "smooth"
+                })
+            }
+        }, 100)
     }
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -147,27 +160,103 @@ export default function Navbar() {
                             className="text-sm lg:text-base transition-colors duration-300 tracking-wide hover:text-[#E8D771]"
                             style={{ color: "#d1d5db" }}
                         >
-                            Contact Us
+                            {t.nav.contactUs}
+                        </button>
+
+                        {/* Language Toggle */}
+                        <button
+                            onClick={() => setLanguage(language === "en" ? "id" : "en")}
+                            className="flex items-center gap-1 px-2 py-1 rounded border border-gray-600 text-xs lg:text-sm transition-all duration-300 hover:border-[#E8D771] hover:text-[#E8D771]"
+                            style={{ color: "#d1d5db" }}
+                        >
+                            <span className={language === "en" ? "text-[#E8D771] font-semibold" : ""}>EN</span>
+                            <span>/</span>
+                            <span className={language === "id" ? "text-[#E8D771] font-semibold" : ""}>ID</span>
                         </button>
                     </div>
 
                     {/* Mobile Menu Button */}
-                    <button className="md:hidden text-gray-300 hover:text-white transition-colors">
+                    <button
+                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                        className="md:hidden text-gray-300 hover:text-white transition-colors"
+                    >
                         <svg
                             className="w-6 h-6"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
                         >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M4 6h16M4 12h16M4 18h16"
-                            />
+                            {isMobileMenuOpen ? (
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M6 18L18 6M6 6l12 12"
+                                />
+                            ) : (
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M4 6h16M4 12h16M4 18h16"
+                                />
+                            )}
                         </svg>
                     </button>
                 </div>
+
+                {/* Mobile Menu */}
+                <AnimatePresence>
+                    {isMobileMenuOpen && (
+                        <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className="md:hidden overflow-hidden"
+                        >
+                            <div className="flex flex-col gap-4 pt-4 pb-2">
+                                {navLinks.map((link, index) => {
+                                    const isActive = activeSection === link.href.replace("#", "")
+                                    return (
+                                        <a
+                                            key={index}
+                                            href={link.href}
+                                            onClick={(e) => handleNavClick(e, link.href)}
+                                            className="text-base transition-colors duration-300 tracking-wide hover:text-[#E8D771] py-2"
+                                            style={{
+                                                color: isActive ? "#b8a855" : "#d1d5db",
+                                            }}
+                                        >
+                                            {link.label}
+                                        </a>
+                                    )
+                                })}
+                                <button
+                                    onClick={() => {
+                                        openModal()
+                                        setIsMobileMenuOpen(false)
+                                    }}
+                                    className="text-base transition-colors duration-300 tracking-wide hover:text-[#E8D771] py-2 text-left"
+                                    style={{ color: "#d1d5db" }}
+                                >
+                                    {t.nav.contactUs}
+                                </button>
+
+                                {/* Mobile Language Toggle */}
+                                <button
+                                    onClick={() => setLanguage(language === "en" ? "id" : "en")}
+                                    className="flex items-center gap-2 py-2 text-base transition-colors duration-300"
+                                    style={{ color: "#d1d5db" }}
+                                >
+                                    <span className={language === "en" ? "text-[#E8D771] font-semibold" : ""}>EN</span>
+                                    <span>/</span>
+                                    <span className={language === "id" ? "text-[#E8D771] font-semibold" : ""}>ID</span>
+                                </button>
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </nav>
 
             {/* Contact Modal */}
@@ -208,7 +297,7 @@ export default function Navbar() {
                                 className="text-2xl md:text-3xl font-serif mb-6"
                                 style={{ color: "#E8D771" }}
                             >
-                                Contact Us
+                                {t.contact.title}
                             </h2>
 
                             {isSubmitted ? (
@@ -218,13 +307,12 @@ export default function Navbar() {
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                         </svg>
                                     </div>
-                                    <p className="text-white text-lg">Opening your email client...</p>
-                                    <p className="text-gray-400 text-sm mt-2">You can send your message directly.</p>
+                                    <p className="text-white text-lg">{t.contact.success}</p>
                                 </div>
                             ) : (
                                 <form onSubmit={handleSubmit} className="space-y-4">
                                     <div>
-                                        <label className="block text-gray-400 text-sm mb-2">Name</label>
+                                        <label className="block text-gray-400 text-sm mb-2">{t.contact.name}</label>
                                         <input
                                             type="text"
                                             name="name"
@@ -233,11 +321,11 @@ export default function Navbar() {
                                             required
                                             className="w-full px-4 py-3 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#b8a855] transition-all duration-300 border border-gray-600"
                                             style={{ backgroundColor: "rgba(26, 26, 26, 0.95)" }}
-                                            placeholder="Your name"
+                                            placeholder={t.contact.name}
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-gray-400 text-sm mb-2">Email</label>
+                                        <label className="block text-gray-400 text-sm mb-2">{t.contact.email}</label>
                                         <input
                                             type="email"
                                             name="email"
@@ -246,11 +334,11 @@ export default function Navbar() {
                                             required
                                             className="w-full px-4 py-3 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#b8a855] transition-all duration-300 border border-gray-600"
                                             style={{ backgroundColor: "rgba(26, 26, 26, 0.95)" }}
-                                            placeholder="your.email@example.com"
+                                            placeholder="email@example.com"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-gray-400 text-sm mb-2">Subject</label>
+                                        <label className="block text-gray-400 text-sm mb-2">{t.contact.subject}</label>
                                         <input
                                             type="text"
                                             name="subject"
@@ -259,11 +347,11 @@ export default function Navbar() {
                                             required
                                             className="w-full px-4 py-3 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#b8a855] transition-all duration-300 border border-gray-600"
                                             style={{ backgroundColor: "rgba(26, 26, 26, 0.95)" }}
-                                            placeholder="What is this about?"
+                                            placeholder={t.contact.subject}
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-gray-400 text-sm mb-2">Message</label>
+                                        <label className="block text-gray-400 text-sm mb-2">{t.contact.message}</label>
                                         <textarea
                                             name="message"
                                             value={formData.message}
@@ -272,7 +360,7 @@ export default function Navbar() {
                                             rows={4}
                                             className="w-full px-4 py-3 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#b8a855] transition-all duration-300 border border-gray-600 resize-none"
                                             style={{ backgroundColor: "rgba(26, 26, 26, 0.95)" }}
-                                            placeholder="Write your message here..."
+                                            placeholder={t.contact.message}
                                         />
                                     </div>
                                     <button
@@ -281,7 +369,7 @@ export default function Navbar() {
                                         className="w-full py-3 rounded-lg font-semibold text-black uppercase tracking-wider transition-all duration-300 hover:scale-[1.02] hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                                         style={{ backgroundColor: "#B8A855" }}
                                     >
-                                        {isSubmitting ? "Sending..." : "Send Message"}
+                                        {isSubmitting ? t.contact.sending : t.contact.send}
                                     </button>
                                 </form>
                             )}
@@ -289,7 +377,7 @@ export default function Navbar() {
                             {/* Contact Info */}
                             <div className="mt-6 pt-6 border-t border-gray-700">
                                 <p className="text-gray-400 text-sm text-center">
-                                    Or email us directly at{" "}
+                                    {t.contact.directEmail}{" "}
                                     <a
                                         href="mailto:pt.sentramudaekspor@gmail.com"
                                         className="hover:text-white transition-colors"
