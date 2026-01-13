@@ -86,7 +86,7 @@ export const translations = {
             thankYou: "✓ Thank you!",
             quickLinks: "Quick Links",
             contactInfo: "Contact Information",
-            location: "Jakrta Barat, Indonesia",
+            location: "Jakarta Barat, Indonesia",
             copyright: "© 2025 PT Sentra Muda Ekspor. All rights reserved.",
         },
 
